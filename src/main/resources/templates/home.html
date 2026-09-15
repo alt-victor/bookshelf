@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>Minha estante · Bookshelf</title>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+    <script src="/js/search.js" th:src="@{/js/search.js}" defer></script>
+</head>
+<body>
+<div class="page-shell">
+    <header class="site-header">
+        <a class="brand" href="/" aria-label="Bookshelf — início">
+            <span class="brand-icon" aria-hidden="true">▥</span> bookshelf<span class="brand-dot">.</span>
+        </a>
+        <nav aria-label="Navegação principal">
+            <a class="nav-link active" href="/" aria-current="page">Minha estante</a>
+            <a class="nav-link" href="/dashboard">Dashboard <span aria-hidden="true">↗</span></a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="library" aria-labelledby="library-title">
+            <div class="library-toolbar">
+                <div class="library-heading"><p class="eyebrow">SUA COLEÇÃO</p><h1 id="library-title">Minha estante <span class="count" th:text="${books == null ? 0 : #lists.size(books)}">0</span></h1></div>
+                <div class="search-field">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+                    <label class="sr-only" for="book-search">Pesquisar por título ou autor</label>
+                    <input id="book-search" type="search" placeholder="Pesquisar título ou autor" autocomplete="off">
+                </div>
+            </div>
+            <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+
+            <div class="book-grid" th:if="${books != null and !#lists.isEmpty(books)}">
+                <article class="book-card" th:each="book : ${books}" th:attr="data-title=${book.title},data-author=${book.author}">
+                    <div class="book-cover">
+                        <span class="cover-label">BOOKSHELF EDITIONS</span>
+                        <span class="cover-title" th:text="${book.title}">Título do livro</span>
+                        <span class="cover-decoration" aria-hidden="true"></span>
+                        <span class="cover-author" th:text="${book.author}">Nome do autor</span>
+                    </div>
+                    <div class="book-info">
+                        <h3 th:text="${book.title}">Título do livro</h3>
+                        <p th:text="${book.author}">Nome do autor</p>
+                        <div class="rating" th:if="${book.rating != null}" th:attr="aria-label=${'Avaliação: ' + book.rating + ' de 5 estrelas'}">
+                            <span th:each="star : ${#numbers.sequence(1, 5)}" th:classappend="${star <= book.rating} ? 'filled'" aria-hidden="true">★</span>
+                            <span class="rating-value" th:text="${book.rating + '.0'}" aria-hidden="true">5.0</span>
+                        </div>
+                        <p class="unrated" th:if="${book.rating == null}">Ainda sem avaliação</p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="empty-state" th:if="${books == null or #lists.isEmpty(books)}">
+                <div class="empty-icon" aria-hidden="true">▥</div>
+                <p class="eyebrow">ESPAÇO PARA NOVAS HISTÓRIAS</p>
+                <h3>Sua próxima leitura começa aqui.</h3>
+                <p>Adicione seu primeiro livro e dê vida à sua estante.</p>
+                <a class="button button-secondary" href="/dashboard">Adicionar meu primeiro livro <span aria-hidden="true">↗</span></a>
+            </div>
+            <div id="no-results" class="empty-state" hidden>
+                <div class="empty-icon" aria-hidden="true">⌕</div>
+                <h3>Nenhum livro encontrado.</h3>
+                <p>Tente outro título ou nome de autor.</p>
+                <button id="clear-search" class="button button-secondary" type="button">Limpar pesquisa</button>
+            </div>
+        </section>
+    </main>
+    <footer><span class="footer-brand">bookshelf.</span><span>Um espaço para suas histórias.</span></footer>
+</div>
+</body>
+</html>
