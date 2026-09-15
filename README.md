@@ -210,7 +210,7 @@ Cada livro deve ser exibido através de um card contendo:
 ├──────────────────────┤
 │ Título               │
 │ Autor                │
-│ ★ ★ ★ ★ ☆            │
+│ ★ ★ ★ ★ ☆           │
 └──────────────────────┘
 ```
 
@@ -364,10 +364,10 @@ O projeto deve ser construído em pequenas etapas funcionais.
 
 ## Milestone 1 — Fundação
 
-* [ ] Criar projeto Spring Boot
-* [ ] Configurar Gradle
-* [ ] Executar aplicação localmente
-* [ ] Criar banco PostgreSQL `bookshelf`
+* [X] Criar projeto Spring Boot
+* [X] Configurar Gradle
+* [X] Executar aplicação localmente
+* [X] Criar banco PostgreSQL `bookshelf`
 * [ ] Configurar datasource
 * [ ] Configurar JPA/Hibernate
 * [ ] Criar entidade `Book`
